@@ -19,13 +19,16 @@ const MainNavigator = ({ navigation }) => {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: Colors.background,
-          borderTopWidth: 0
+          // backgroundColor: Colors.background,
+          borderTopWidth: 1
         },
-        headerStyle: {
-          backgroundColor: Colors.background,
-          shadowColor: Colors.background
+        tabBarLabelStyle: {
+          fontSize: 20,
+          textAlignVertical: 'center',
+          alignContent: 'center'
         },
+        tabBarLabelPosition: 'beside-icon',
+        tabBarIconStyle: { display: 'none' },
         headerTintColor: '#fff',
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: 'gray'
