@@ -1,16 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React from 'react'
+import HomeScreen from '../Containers/HomeScreen'
 import Colors from '../Themes/Colors'
 
 const Tab = createBottomTabNavigator()
-
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-    </View>
-  )
-}
 
 function ConsentScreen() {
   return (
