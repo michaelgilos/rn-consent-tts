@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga'
 import Config from '../Config/DebugConfig'
 import Reactotron from '../Config/ReactotronConfig'
 import ReduxPersist from '../Config/ReduxPersist'
+import Rehydration from '../Services/Rehydration'
 
 // creates the store
 export default (rootReducer, rootSaga) => {
