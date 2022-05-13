@@ -23,8 +23,10 @@ export const INITIAL_STATE = Immutable({
 
 export const saveUserConsent = (state, { username, language, response }) =>
   state.merge(
-    { username, language, response },
-    { merger: Mergers.concatArrayMerger }
+    { consents: [{ username, language, response }] },
+    {
+      merger: Mergers.concatArrayMerger
+    }
   )
 
 /* ------------- Hookup Reducers To Types ------------- */
