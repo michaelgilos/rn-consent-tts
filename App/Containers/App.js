@@ -3,8 +3,8 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import '../Config'
 import DebugConfig from '../Config/DebugConfig'
-import createStore from '../Redux'
 import MainNavigator from '../Navigation/MainNavigator'
+import createStore from '../Redux'
 
 // create our store
 const store = createStore()
