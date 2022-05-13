@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { persistReducer } from 'redux-persist'
 import ReduxPersist from '../Config/ReduxPersist'
 import rootSaga from '../Sagas/'
 import configureStore from './CreateStore'
