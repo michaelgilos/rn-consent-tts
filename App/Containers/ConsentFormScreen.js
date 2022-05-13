@@ -33,7 +33,7 @@ const ConsentsScreen = ({ navigation, route }) => {
 
     Tts.addEventListener('tts-finish', (event) => {
       setTtsCompleted(true)
-      console.tron.log({ event })
+      console.tron.log('finish', event)
     })
 
     Tts.getInitStatus()
