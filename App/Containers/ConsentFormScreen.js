@@ -26,6 +26,18 @@ const ConsentsScreen = ({ navigation, route }) => {
 
   const [ttsCompleted, setTtsCompleted] = useState(false)
 
+  const playConsent = () => {
+    Tts.getInitStatus()
+      .then(() => {
+        Tts.speak(i18n.t('consent'))
+      })
+      .catch((err) => {
+        if (err.code === 'no_engine') {
+          Tts.requestInstallEngine()
+        }
+      })
+  }
+
   useEffect(() => {
     Tts.setDefaultLanguage(language)
 
@@ -36,21 +48,18 @@ const ConsentsScreen = ({ navigation, route }) => {
       console.tron.log('finish', event)
     })
 
-    // Tts.getInitStatus()
-    //   .then(() => {
-    //     Tts.speak(i18n.t('consent'))
-    //   })
-    //   .catch((err) => {
-    //     if (err.code === 'no_engine') {
-    //       Tts.requestInstallEngine()
-    //     }
-    //   })
+    playConsent()
 
     return () => {
       Tts.stop()
       Tts.removeAllListeners('tts-finish')
     }
   }, [])
+
+  const onRetry = () => {
+    playConsent()
+    setTtsCompleted(false)
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -71,7 +80,10 @@ const ConsentsScreen = ({ navigation, route }) => {
       </View>
 
       <View style={styles.buttonGroup}>
-        <TouchableOpacity disabled={!ttsCompleted} style={styles.button}>
+        <TouchableOpacity
+          disabled={!ttsCompleted}
+          style={styles.button}
+          onPress={onRetry}>
           <Text>Retry</Text>
         </TouchableOpacity>
 
