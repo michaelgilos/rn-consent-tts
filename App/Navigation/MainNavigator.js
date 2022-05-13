@@ -37,8 +37,8 @@ const MainNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Home">
-      <Stack.Screen name="Home" component={TabNavigator} />
+      initialRouteName="HomeTab">
+      <Stack.Screen name="HomeTab" component={TabNavigator} />
       <Stack.Screen name="Consent" component={ConsentFormScreen} />
     </Stack.Navigator>
   )
