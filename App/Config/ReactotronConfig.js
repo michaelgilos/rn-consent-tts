@@ -1,14 +1,15 @@
-import Config from '../Config/DebugConfig'
-import Immutable from 'seamless-immutable'
+import AsyncStorage from '@react-native-community/async-storage'
 import Reactotron from 'reactotron-react-native'
 import { reactotronRedux as reduxPlugin } from 'reactotron-redux'
 import sagaPlugin from 'reactotron-redux-saga'
+import Immutable from 'seamless-immutable'
+import Config from '../Config/DebugConfig'
 
-const reactotron = Reactotron
-    .configure({ name: 'Ignite App' })
-    .useReactNative()
-    .use(reduxPlugin({ onRestore: Immutable }))
-    .use(sagaPlugin())
+const reactotron = Reactotron.configure({ name: 'Consent App' })
+  .useReactNative()
+  .use(reduxPlugin({ onRestore: Immutable }))
+  .use(sagaPlugin())
+  .setAsyncStorageHandler(AsyncStorage)
 
 if (Config.useReactotron) {
   // https://github.com/infinitered/reactotron for more options!
