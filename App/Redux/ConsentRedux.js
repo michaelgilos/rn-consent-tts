@@ -1,10 +1,11 @@
 import { createActions, createReducer } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
+import Mergers from 'seamless-immutable-mergers'
 
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  saveUserConsent: ['username', 'language', 'consent']
+  saveUserConsent: ['username', 'language', 'response']
 })
 
 export const ConsentTypes = Types
@@ -20,9 +21,9 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Reducers ------------- */
 
-export const saveUserConsent = (state, { username, language, consent }) =>
+export const saveUserConsent = (state, { username, language, response }) =>
   state.merge(
-    { username, language, consent },
+    { username, language, response },
     { merger: Mergers.concatArrayMerger }
   )
 
