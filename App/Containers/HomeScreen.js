@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,10 @@ import DropDownPicker from 'react-native-dropdown-picker'
 import { connect } from 'react-redux'
 
 const HomeScreen = ({ navigation }) => {
+  const [name, setName] = useState('')
+  const [language, setLanguage] = useState()
+  const [open, setOpen] = useState(false)
+
   return (
     <View style={styles.container}>
       <Text style={styles.consentText}>Consent Form</Text>
@@ -18,6 +22,8 @@ const HomeScreen = ({ navigation }) => {
       <TextInput
         style={[styles.inputText, { marginTop: 10 }]}
         placeholder="Enter your name"
+        value={name}
+        onChangeText={setName}
       />
 
       <Text style={[styles.labelText, { marginTop: 20 }]}>Language</Text>
@@ -27,9 +33,12 @@ const HomeScreen = ({ navigation }) => {
           { label: 'France', value: 'fr' }
         ]}
         defaultNull
+        open={open}
+        setOpen={setOpen}
+        value={language}
+        setValue={setLanguage}
         placeholder="Select Language"
         containerStyle={{ marginTop: 10 }}
-        onChangeItem={(item) => console.log(item.label, item.value)}
       />
 
       <TouchableOpacity
