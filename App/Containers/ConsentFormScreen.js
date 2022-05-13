@@ -36,15 +36,15 @@ const ConsentsScreen = ({ navigation, route }) => {
       console.tron.log('finish', event)
     })
 
-    Tts.getInitStatus()
-      .then(() => {
-        Tts.speak(i18n.t('consent'))
-      })
-      .catch((err) => {
-        if (err.code === 'no_engine') {
-          Tts.requestInstallEngine()
-        }
-      })
+    // Tts.getInitStatus()
+    //   .then(() => {
+    //     Tts.speak(i18n.t('consent'))
+    //   })
+    //   .catch((err) => {
+    //     if (err.code === 'no_engine') {
+    //       Tts.requestInstallEngine()
+    //     }
+    //   })
 
     return () => {
       Tts.stop()
@@ -53,20 +53,32 @@ const ConsentsScreen = ({ navigation, route }) => {
   }, [])
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titleText}>Consent Form</Text>
-      <Text style={styles.consentText}>{i18n.t('consent')}</Text>
+    <View style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Text style={styles.titleText}>Consent Form</Text>
+        <Text style={styles.consentText}>{i18n.t('consent')}</Text>
 
-      <TouchableOpacity style={styles.microphone} disabled={!ttsCompleted}>
-        <Image
-          style={{
-            width: 48,
-            height: 48,
-            alignSelf: 'center'
-          }}
-          source={Images.microphone}
-        />
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.microphone} disabled={!ttsCompleted}>
+          <Image
+            style={{
+              width: 48,
+              height: 48,
+              alignSelf: 'center'
+            }}
+            source={Images.microphone}
+          />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.buttonGroup}>
+        <TouchableOpacity disabled={!ttsCompleted} style={styles.button}>
+          <Text>Retry</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity disabled={!ttsCompleted} style={styles.button}>
+          <Text>Save</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -95,6 +107,20 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 60 / 2,
     backgroundColor: 'grey'
+  },
+  buttonGroup: {
+    flexDirection: 'row',
+    width: '100%',
+    position: 'absolute',
+    bottom: 0,
+    justifyContent: 'space-around'
+  },
+  button: {
+    borderColor: 'grey',
+    borderWidth: 1,
+    flex: 0.5,
+    padding: 20,
+    alignItems: 'center'
   }
 })
 
