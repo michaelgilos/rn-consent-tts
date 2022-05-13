@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga'
 import ScreenTracking from './ScreenTrackingMiddleware'
 import { appNavigatorMiddleware } from '../Navigation/ReduxNavigation'
 import Reactotron from '../Config/ReactotronConfig'
+import ReduxPersist from '../Config/ReduxPersist'
 
 // creates the store
 export default (rootReducer, rootSaga) => {
@@ -35,6 +36,11 @@ export default (rootReducer, rootSaga) => {
   }
   const store = createAppropriateStore(rootReducer, compose(...enhancers))
 
+  // configure persistStore and check reducer version number
+  if (ReduxPersist.active) {
+    Rehydration.updateReducers(store)
+  }
+  
   // kick off root saga
   let sagasManager = sagaMiddleware.run(rootSaga)
 
