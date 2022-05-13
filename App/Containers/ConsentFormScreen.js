@@ -21,7 +21,7 @@ i18n.translations = {
 
 const ConsentsScreen = ({ navigation, route }) => {
   const { name, language } = route.params
-  
+
   i18n.locale = language
 
   const [ttsCompleted, setTtsCompleted] = useState(false)
@@ -40,13 +40,16 @@ const ConsentsScreen = ({ navigation, route }) => {
       .then(() => {
         Tts.speak(i18n.t('consent'))
       })
-      .catch((e) => {
+      .catch((err) => {
         if (err.code === 'no_engine') {
           Tts.requestInstallEngine()
         }
       })
 
-    return Tts.removeAllListeners('tts-finish')
+    return () => {
+      Tts.stop()
+      Tts.removeAllListeners('tts-finish')
+    }
   }, [])
 
   return (
