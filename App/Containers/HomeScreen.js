@@ -14,6 +14,8 @@ const HomeScreen = ({ navigation }) => {
   const [language, setLanguage] = useState()
   const [open, setOpen] = useState(false)
 
+  const onNext = () => navigation.navigate('Consent', { name, language })
+
   return (
     <View style={styles.container}>
       <Text style={styles.consentText}>Consent Form</Text>
@@ -48,7 +50,8 @@ const HomeScreen = ({ navigation }) => {
           borderWidth: 1,
           padding: 10,
           alignSelf: 'flex-end'
-        }}>
+        }}
+        onPress={onNext}>
         <Text>Next</Text>
       </TouchableOpacity>
     </View>
