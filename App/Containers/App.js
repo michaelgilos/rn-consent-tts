@@ -1,9 +1,10 @@
+import { NavigationContainer } from '@react-navigation/native'
+import React from 'react'
+import { Provider } from 'react-redux'
 import '../Config'
 import DebugConfig from '../Config/DebugConfig'
-import React, { Component } from 'react'
-import { Provider } from 'react-redux'
-import RootContainer from './RootContainer'
 import createStore from '../Redux'
+import MainNavigator from '../Navigation/MainNavigator'
 
 // create our store
 const store = createStore()
@@ -17,17 +18,13 @@ const store = createStore()
  *
  * We separate like this to play nice with React Native's hot reloading.
  */
-class App extends Component {
-  render () {
-    return (
-      <Provider store={store}>
-        <RootContainer />
-      </Provider>
-    )
-  }
-}
+const App = () => (
+  <Provider store={store}>
+    <NavigationContainer>
+      <MainNavigator />
+    </NavigationContainer>
+  </Provider>
+)
 
 // allow reactotron overlay for fast design in dev mode
-export default DebugConfig.useReactotron
-  ? console.tron.overlay(App)
-  : App
+export default DebugConfig.useReactotron ? console.tron.overlay(App) : App
