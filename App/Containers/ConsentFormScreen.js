@@ -15,7 +15,8 @@ const ConsentsScreen = ({ navigation }) => {
         <Image
           style={{
             width: 48,
-            height: 48
+            height: 48,
+            alignSelf: 'center'
           }}
           source={Images.microphone}
         />
@@ -41,8 +42,13 @@ const styles = StyleSheet.create({
     textAlign: 'justify'
   },
   microphone: {
+    justifyContent: 'center',
     marginTop: 40,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    width: 60,
+    height: 60,
+    borderRadius: 60 / 2,
+    backgroundColor: 'grey'
   }
 })
 
