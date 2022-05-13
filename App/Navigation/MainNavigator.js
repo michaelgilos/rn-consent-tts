@@ -17,6 +17,7 @@ const MainNavigator = ({ navigation }) => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        headerShown: false,
         tabBarStyle: {
           backgroundColor: Colors.background,
           borderTopWidth: 0
