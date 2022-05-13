@@ -1,9 +1,10 @@
+import i18n from 'i18n-js'
 import React, { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { connect } from 'react-redux'
-import Images from '../Themes/Images'
-import i18n from 'i18n-js'
 import Tts from 'react-native-tts'
+import { connect } from 'react-redux'
+import ConsentActions from '../Redux/ConsentRedux'
+import Images from '../Themes/Images'
 
 i18n.fallbacks = true
 
@@ -19,7 +20,7 @@ i18n.translations = {
 
 // i18n.locale = 'fr'
 
-const ConsentsScreen = ({ navigation, route }) => {
+const ConsentsScreen = ({ saveConsent, route }) => {
   const { name, language } = route.params
 
   i18n.locale = language
@@ -61,6 +62,10 @@ const ConsentsScreen = ({ navigation, route }) => {
     setTtsCompleted(false)
   }
 
+  const onSave = () => {
+    saveConsent({ name, language, response: 'yes' })
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -87,7 +92,10 @@ const ConsentsScreen = ({ navigation, route }) => {
           <Text>Retry</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity disabled={!ttsCompleted} style={styles.button}>
+        <TouchableOpacity
+          disabled={!ttsCompleted}
+          style={styles.button}
+          onPress={onSave}>
           <Text>Save</Text>
         </TouchableOpacity>
       </View>
@@ -136,4 +144,9 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(null, null)(ConsentsScreen)
+const mapDispatchToProps = (dispatch) => ({
+  saveConsent: ({ name, language, response }) =>
+    dispatch(ConsentActions.saveUserConsent(name, language, response))
+})
+
+export default connect(null, mapDispatchToProps)(ConsentsScreen)
