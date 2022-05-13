@@ -1,11 +1,25 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
+import Images from '../Themes/Images'
 
 const ConsentsScreen = ({ navigation }) => {
+  const consent = `You understand that by using the site or site services, you agree to be bound by this agreement.If you do not accept this agreement in its entirety, you must not access or use the site or the site services.\n\nDo you agree to this agreement?\nPlease respond by saying "Yes" or "No".`
+
   return (
     <View style={styles.container}>
-      <Text style={styles.consentText}>Consent Form</Text>
+      <Text style={styles.titleText}>Consent Form</Text>
+      <Text style={styles.consentText}>{consent}</Text>
+
+      <TouchableOpacity style={styles.microphone}>
+        <Image
+          style={{
+            width: 48,
+            height: 48
+          }}
+          source={Images.microphone}
+        />
+      </TouchableOpacity>
     </View>
   )
 }
@@ -16,17 +30,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 40
   },
-  consentText: {
+  titleText: {
     fontSize: 22,
     fontWeight: 'bold',
     alignSelf: 'center'
   },
-  labelText: {
-    fontSize: 14
+  consentText: {
+    fontSize: 14,
+    marginTop: 20,
+    textAlign: 'justify'
   },
-  inputText: {
-    borderColor: '#000',
-    borderWidth: 1
+  microphone: {
+    marginTop: 40,
+    alignSelf: 'center'
   }
 })
 
