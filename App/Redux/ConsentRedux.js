@@ -5,7 +5,7 @@ import Mergers from 'seamless-immutable-mergers'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  saveUserConsent: ['username', 'language', 'response']
+  saveUserConsent: ['name', 'language', 'response']
 })
 
 export const ConsentTypes = Types
@@ -19,11 +19,15 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Selectors ------------- */
 
+export const ConsentSelectors = {
+  getConsents: (state) => state.consent.consents
+}
+
 /* ------------- Reducers ------------- */
 
-export const saveUserConsent = (state, { username, language, response }) =>
+export const saveUserConsent = (state, { name, language, response }) =>
   state.merge(
-    { consents: [{ username, language, response }] },
+    { consents: [{ name, language, response }] },
     {
       merger: Mergers.concatArrayMerger
     }
