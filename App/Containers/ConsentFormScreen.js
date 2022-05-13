@@ -55,7 +55,7 @@ const ConsentsScreen = ({ saveConsent, route }) => {
       Tts.stop()
       Tts.removeAllListeners('tts-finish')
     }
-  }, [])
+  }, [language])
 
   const onRetry = () => {
     playConsent()
