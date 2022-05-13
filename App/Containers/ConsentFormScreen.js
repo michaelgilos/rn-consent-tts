@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 import Images from '../Themes/Images'
@@ -6,12 +6,14 @@ import Images from '../Themes/Images'
 const ConsentsScreen = ({ navigation }) => {
   const consent = `You understand that by using the site or site services, you agree to be bound by this agreement.If you do not accept this agreement in its entirety, you must not access or use the site or the site services.\n\nDo you agree to this agreement?\nPlease respond by saying "Yes" or "No".`
 
+  const [ttsCompleted, setTtsCompleted] = useState(false)
+
   return (
     <View style={styles.container}>
       <Text style={styles.titleText}>Consent Form</Text>
       <Text style={styles.consentText}>{consent}</Text>
 
-      <TouchableOpacity style={styles.microphone}>
+      <TouchableOpacity style={styles.microphone} disabled={!ttsCompleted}>
         <Image
           style={{
             width: 48,
