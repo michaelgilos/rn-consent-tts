@@ -1,46 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import Tts from 'react-native-tts'
 import { connect } from 'react-redux'
+import useTts from '../Hooks/useTts'
 import ConsentActions, { ConsentSelectors } from '../Redux/ConsentRedux'
 import Images from '../Themes/Images'
 
 const ConsentsScreen = ({ saveConsent, route, consentByLocale }) => {
   const { name, language } = route.params
-
   const consent = consentByLocale(language)
-
   const [ttsCompleted, setTtsCompleted] = useState(false)
+  const [speakTts, stopTts] = useTts()
 
   const playConsent = () => {
-    Tts.getInitStatus()
-      .then(() => {
-        Tts.speak(consent)
-      })
-      .catch((err) => {
-        if (err.code === 'no_engine') {
-          Tts.requestInstallEngine()
-        }
-      })
+    speakTts({
+      text: consent,
+      locale: language,
+      onComplete: () => setTtsCompleted(true)
+    })
   }
 
   useEffect(() => {
-    Tts.setDefaultLanguage(language)
-
-    Tts.engines().then((engines) => console.tron.log({ engines }))
-
-    Tts.addEventListener('tts-finish', (event) => {
-      setTtsCompleted(true)
-      console.tron.log('finish', event)
-    })
-
     playConsent()
 
-    return () => {
-      Tts.stop()
-      Tts.removeAllListeners('tts-finish')
-    }
-  }, [language])
+    return stopTts
+  }, [])
 
   const onRetry = () => {
     playConsent()
