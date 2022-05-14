@@ -34,24 +34,8 @@ const ConsentsScreen = ({ saveConsent, route, consentByLocale }) => {
     saveConsent({ name, language, response: 'yes' })
   }
 
-  return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <Text style={styles.titleText}>Consent Form</Text>
-        <Text style={styles.consentText}>{consent}</Text>
-
-        <TouchableOpacity style={styles.microphone} disabled={!ttsCompleted}>
-          <Image
-            style={{
-              width: 48,
-              height: 48,
-              alignSelf: 'center'
-            }}
-            source={Images.microphone}
-          />
-        </TouchableOpacity>
-      </View>
-
+  const ActionButtons = () =>
+    ttsCompleted && (
       <View style={styles.buttonGroup}>
         <TouchableOpacity
           disabled={!ttsCompleted}
@@ -66,6 +50,35 @@ const ConsentsScreen = ({ saveConsent, route, consentByLocale }) => {
           onPress={onSave}>
           <Text>Save</Text>
         </TouchableOpacity>
+      </View>
+    )
+
+  const RecordButton = () => (
+    <TouchableOpacity
+      style={[
+        styles.microphone,
+        { backgroundColor: ttsCompleted ? 'green' : 'grey' }
+      ]}
+      disabled={!ttsCompleted}>
+      <Image
+        style={{
+          width: 48,
+          height: 48,
+          alignSelf: 'center'
+        }}
+        source={Images.microphone}
+      />
+    </TouchableOpacity>
+  )
+
+  return (
+    <View style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Text style={styles.titleText}>Consent Form</Text>
+        <Text style={styles.consentText}>{consent}</Text>
+
+        <RecordButton />
+        <ActionButtons />
       </View>
     </View>
   )
