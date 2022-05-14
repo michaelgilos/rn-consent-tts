@@ -18,8 +18,6 @@ i18n.translations = {
   }
 }
 
-// i18n.locale = 'fr'
-
 const ConsentsScreen = ({ saveConsent, route }) => {
   const { name, language } = route.params
 
