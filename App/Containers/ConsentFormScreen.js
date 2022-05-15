@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Alert
+} from 'react-native'
 import { connect } from 'react-redux'
+import useSpeech from '../Hooks/useSpeechRecognition'
 import useTts from '../Hooks/useTts'
 import ConsentActions, { ConsentSelectors } from '../Redux/ConsentRedux'
 import Images from '../Themes/Images'
@@ -10,6 +18,20 @@ const ConsentsScreen = ({ saveConsent, route, consentByLocale }) => {
   const consent = consentByLocale(language)
   const [ttsCompleted, setTtsCompleted] = useState(false)
   const [speakTts, stopTts] = useTts()
+  const [isRecording, setIsRecording] = useState(false)
+
+  const onSpeechError = (messsage) => {
+    Alert.alert('Error', messsage, [
+      { text: 'OK', onPress: () => console.log('OK Pressed') }
+    ])
+  }
+  const onSpeechEnd = (e) => {}
+  const onSpeechResult = (e) => {}
+  const [startSpeech, stopSpeech, cleanupSpeech] = useSpeech({
+    onSpeechEnd,
+    onSpeechResult,
+    onSpeechError
+  })
 
   const playConsent = () => {
     speakTts({
@@ -22,7 +44,10 @@ const ConsentsScreen = ({ saveConsent, route, consentByLocale }) => {
   useEffect(() => {
     playConsent()
 
-    return stopTts
+    return () => {
+      stopTts()
+      cleanupSpeech()
+    }
   }, [])
 
   const onRetry = () => {
@@ -32,6 +57,16 @@ const ConsentsScreen = ({ saveConsent, route, consentByLocale }) => {
 
   const onSave = () => {
     saveConsent({ name, language, response: 'yes' })
+  }
+
+  const onRecordButtonClick = () => {
+    if (!isRecording) {
+      setIsRecording(true)
+      startSpeech(language)
+    } else {
+      setIsRecording(false)
+      stopSpeech()
+    }
   }
 
   const ActionButtons = () =>
@@ -59,7 +94,8 @@ const ConsentsScreen = ({ saveConsent, route, consentByLocale }) => {
         styles.microphone,
         { backgroundColor: ttsCompleted ? 'green' : 'grey' }
       ]}
-      disabled={!ttsCompleted}>
+      disabled={!ttsCompleted}
+      onPress={onRecordButtonClick}>
       <Image
         style={{
           width: 48,
@@ -78,6 +114,7 @@ const ConsentsScreen = ({ saveConsent, route, consentByLocale }) => {
         <Text style={styles.consentText}>{consent}</Text>
 
         <RecordButton />
+
         <ActionButtons />
       </View>
     </View>
