@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
   },
   inputText: {
     borderColor: '#000',
-    borderWidth: 1
+    borderWidth: 1,
+    color: '#000'
   }
 })
 
